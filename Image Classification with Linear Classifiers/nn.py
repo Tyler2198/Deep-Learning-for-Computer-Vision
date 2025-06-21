@@ -21,6 +21,7 @@ class NearestNeighbor(object):
       # find the nearest training image to the i'th test image
       # using the L1 distance (sum of absolute value differences)
       distances = np.sum(np.abs(self.Xtr - X[i,:]), axis = 1)
+      # distances = np.sqrt(np.sum(np.square(self.Xtr - X[i,:]), axis = 1)) # Using L2-Norm instead
       min_index = np.argmin(distances) # get the index with smallest distance
       Ypred[i] = self.ytr[min_index] # predict the label of the nearest example
 
