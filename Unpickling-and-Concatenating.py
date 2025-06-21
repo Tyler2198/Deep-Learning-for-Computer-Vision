@@ -10,7 +10,7 @@ def unpickle(file):
     return dict
 
 # Path to the folder containing the CIFAR-10 batches
-data_dir = 'cifar-10-batches-py'
+data_dir = '/Users/kryptonempyrean/Downloads/cifar-10-batches-py'
 
 # Initialize lists to store data and labels
 data_list = []
@@ -23,9 +23,17 @@ for i in range(1, 6):
     labels_list.extend(batch[b'labels'])     # list of 10000 elements
 
 # Concatenate into single arrays
-X_train = np.concatenate(data_list, axis=0)      # shape: (50000, 3072)
-y_train = np.array(labels_list)                  # shape: (50000,)
+Xtr = np.concatenate(data_list, axis=0)      # shape: (50000, 3072)
+Yr = np.array(labels_list)                  # shape: (50000,)
 
-# Optional: reshape the images
 # Each image is 32x32 with 3 color channels
-X_train = X_train.reshape(-1, 3, 32, 32).transpose(0, 2, 3, 1)  # shape: (50000, 32, 32, 3)
+Xtr = Xtr.reshape(-1, 3, 32, 32).transpose(0, 2, 3, 1)  # shape: (50000, 32, 32, 3)
+
+# Load the test batch
+test_batch = unpickle(os.path.join(data_dir, 'test_batch'))
+
+Xte = test_batch[b'data']                  # shape: (10000, 3072)
+Yte = np.array(test_batch[b'labels'])      # shape: (10000,)
+
+# Optional: reshape the images to (N, 32, 32, 3)
+Xte = Xte.reshape(-1, 3, 32, 32).transpose(0, 2, 3, 1)  # shape: (10000, 32, 32, 3)
